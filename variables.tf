@@ -1,5 +1,6 @@
 variable "libvirt_volume_name" {
   description = "The name of the libvirt volume to use"
+  default     = "ubuntu"
 }
 
 variable "libvirt-pool" {
@@ -30,11 +31,12 @@ variable "network_config_path" {
 
 variable "vm_name" {
   description = "The name of the virtual machine"
+  default     = "ubuntu-vm"
 }
 
 variable "vm_memory" {
   description = "The amount of memory to allocate to the virtual machine in MB"
-
+  default     = 2048
   validation {
     condition     = var.vm_memory > 0
     error_message = "Memory must be greater than 0"
@@ -43,7 +45,7 @@ variable "vm_memory" {
 
 variable "vm_vcpu" {
   description = "The number of virtual CPUs to allocate to the virtual machine"
-
+  default     = 1
   validation {
     condition     = var.vm_vcpu > 0
     error_message = "vCPU must be greater than 0"
@@ -53,7 +55,7 @@ variable "vm_vcpu" {
 variable "number_of_vms" {
   description = "The number of virtual machines to create"
   type        = number
-
+  default     = 1
   validation {
     condition     = var.number_of_vms > 0
     error_message = "Number of VMs must be greater than 0"
@@ -64,6 +66,7 @@ variable "number_of_vms" {
 variable "vm_disk_size" {
   description = "The size of the disk to allocate to the virtual machine"
   type        = number
+  default     = 5368709120 # 5GB
   validation {
     condition     = var.vm_disk_size > 5
     error_message = "Disk size must be greater than 5GB"

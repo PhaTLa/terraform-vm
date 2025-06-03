@@ -56,7 +56,7 @@ resource "libvirt_domain" "domain-ubuntu" {
     hostname = var.vm_name
     wait_for_lease = true
   }
-
+  depends_on = [libvirt_cloudinit_disk.commoninit]
   # IMPORTANT: this is a known bug on cloud images, since they expect a console
   # we need to pass it
   # https://bugs.launchpad.net/cloud-images/+bug/1573095
@@ -84,5 +84,5 @@ resource "libvirt_domain" "domain-ubuntu" {
 }
 
 output "created_network_interface" {
-  value = [for instance in libvirt_domain.domain-ubuntu : instance.network_interface[0].addresses[0]]
+  value = [for instance in libvirt_domain.domain-ubuntu : length(instance.network_interface[0].addresses) > 0 ? instance.network_interface[0].addresses[0] : "No IP assigned"]
 }
